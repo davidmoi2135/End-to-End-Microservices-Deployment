@@ -1,0 +1,61 @@
+# ==========================================
+# 1. TERRAFORM
+# ==========================================
+# Bỏ qua thư mục làm việc cục bộ của Terraform (rất nặng)
+**/.terraform/*
+
+# Bỏ qua các file trạng thái (Chứa thông tin hạ tầng thật và dữ liệu nhạy cảm)
+*.tfstate
+*.tfstate.*
+
+# Bỏ qua thư mục tải về của Terraform
+.terraform/
+
+# Bỏ qua toàn bộ source code của Kubespray
+kubespray/
+
+# Bỏ qua file crash log
+crash.log
+crash.*.log
+
+# Bỏ qua các file biến môi trường chứa secret/password
+*.tfvars
+*.tfvars.json
+
+# Bỏ qua file ghi đè cấu hình cục bộ
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Bỏ qua file kết quả của lệnh terraform plan
+*tfplan*
+
+# ==========================================
+# 2. KUBESPRAY, ANSIBLE & PYTHON
+# ==========================================
+# Bỏ qua file retry của Ansible khi chạy lỗi
+*.retry
+
+# Bỏ qua môi trường ảo Python (Rất nặng, chứa hàng ngàn file nhỏ)
+venv/
+env/
+__pycache__/
+*.pyc
+
+# ==========================================
+# 3. SECURITY & KEYS (CỰC KỲ QUAN TRỌNG)
+# ==========================================
+# Tuyệt đối không push các file khóa SSH lên GitHub (Ví dụ: trinhkeypair-ap.pem)
+*.pem
+*.rsa
+*.pub
+*.key
+
+# ==========================================
+# 4. HỆ ĐIỀU HÀNH & IDE
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
