@@ -1,6 +1,0 @@
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/cart-service/src/main/java/com/minejava/cartservice/controller/CartController.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/cart-service/src/main/java/com/minejava/cartservice/model/Cart.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/cart-service/src/main/java/com/minejava/cartservice/model/CartItem.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/cart-service/src/main/java/com/minejava/cartservice/service/CartService.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/cart-service/src/main/java/com/minejava/cartservice/CartServiceApplication.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/cart-service/src/main/java/com/minejava/cartservice/repository/CartRepository.java

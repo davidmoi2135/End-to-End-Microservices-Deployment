@@ -1,9 +1,0 @@
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/model/Product.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/controller/ProductController.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/dto/InventoryResponse.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/dto/ProductRequest.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/dto/ProductResponse.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/service/ProductService.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/config/WebClientConfig.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/repository/ProductRepository.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/product-service/src/main/java/com/minejava/productservice/ProductServiceApplication.java

@@ -1,8 +1,0 @@
-com/minejava/paymentservice/config/VNPayConfig.class
-com/minejava/paymentservice/controller/PaymentController.class
-com/minejava/paymentservice/dto/OrderItemDto.class
-com/minejava/paymentservice/event/PaymentEvent.class
-com/minejava/paymentservice/service/PaymentService.class
-com/minejava/paymentservice/config/WebClientConfig.class
-com/minejava/paymentservice/PaymentServiceApplication.class
-com/minejava/paymentservice/dto/PaymentRequest.class

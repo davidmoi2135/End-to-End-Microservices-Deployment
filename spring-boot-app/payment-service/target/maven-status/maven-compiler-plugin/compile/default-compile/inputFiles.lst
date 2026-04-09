@@ -1,8 +1,0 @@
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/controller/PaymentController.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/dto/PaymentRequest.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/dto/OrderItemDto.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/event/PaymentEvent.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/config/VNPayConfig.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/PaymentServiceApplication.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/config/WebClientConfig.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/payment-service/src/main/java/com/minejava/paymentservice/service/PaymentService.java

@@ -59,3 +59,33 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+*.log
+
+# ==========================================
+# 5. JAVA & MAVEN (Spring Boot)
+# ==========================================
+**/target/
+**/*.jar
+**/*.war
+**/*.ear
+.mvn/wrapper/maven-wrapper.jar
+.classpath
+.project
+.settings/
+*.class
+
+# ==========================================
+# 6. NODE.JS & REACT (Frontend)
+# ==========================================
+**/node_modules/
+**/build/
+**/dist/
+.npm
+.eslintcache
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

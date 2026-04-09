@@ -1,8 +1,0 @@
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/dto/InventoryResponse.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/event/PaymentEvent.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/InventoryServiceApplication.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/model/Inventory.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/repository/InventoryRepository.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/service/InventoryService.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/dto/OrderItemDto.java
-/mnt/c/Users/TRINH/Documents/spring-kafka-microservices-app/inventory-service/src/main/java/com/minejava/inventoryservice/controller/InventoryController.java

@@ -1,9 +1,0 @@
-com/minejava/inventoryservice/repository/InventoryRepository.class
-com/minejava/inventoryservice/controller/InventoryController.class
-com/minejava/inventoryservice/dto/OrderItemDto.class
-com/minejava/inventoryservice/dto/InventoryResponse$InventoryResponseBuilder.class
-com/minejava/inventoryservice/service/InventoryService.class
-com/minejava/inventoryservice/event/PaymentEvent.class
-com/minejava/inventoryservice/InventoryServiceApplication.class
-com/minejava/inventoryservice/model/Inventory.class
-com/minejava/inventoryservice/dto/InventoryResponse.class
