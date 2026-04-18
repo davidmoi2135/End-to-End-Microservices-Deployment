@@ -29,7 +29,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
+      - name: Debug path
+        run: |
+          pwd
+          ls -la
+          ls -la spring-boot-app || echo "no spring-boot-app"
+          ls -la spring-boot-app/frontend || echo "no frontend"
       - name: Install dependencies
         run: npm install
 
