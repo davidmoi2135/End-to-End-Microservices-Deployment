@@ -51,5 +51,5 @@ jobs:
       # Build & Push Docker image
       - name: Build & Push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} ./spring-boot-app/frontend  
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} . 
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}
