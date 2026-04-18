@@ -19,6 +19,7 @@ public class CartController {
 
     @PostMapping("/{userId}/add")
     public Cart addItem(@PathVariable String userId, @RequestBody CartItem item) {
+        System.err.println("Adding item to cart: " + item);
         return cartService.addItem(userId, item);
     }
 
