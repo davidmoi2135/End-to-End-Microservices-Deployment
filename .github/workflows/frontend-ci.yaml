@@ -17,8 +17,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # SonarQube cần lịch sử git để phân tích tốt hơn
 
-      # Cache node_modules (build nhanh hơn)
       - name: Cache node modules
         uses: actions/cache@v3
         with:
@@ -29,27 +30,57 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Debug path
-        run: |
-          pwd
-          ls -la
-          ls -la spring-boot-app || echo "no spring-boot-app"
-          ls -la spring-boot-app/frontend || echo "no frontend"
+
       - name: Install dependencies
         run: npm install
 
       - name: Build React app
         run: npm run build
 
-      # Login Docker Hub
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: spring-boot-app/frontend
+
       - name: Login Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build & Push Docker image
-      - name: Build & Push Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} . 
-          docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} . 
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}
+
+      - name: Slack Notification - Success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: 'good'
+          SLACK_TITLE: 'Build Success'
+          SLACK_MESSAGE: 'Service: ${{ github.workflow }} has been built, scanned, and pushed successfully! 🚀'
+
+      - name: Slack Notification - Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_COLOR: 'danger'
+          SLACK_TITLE: 'Build Failed'
+          SLACK_MESSAGE: 'Something went wrong in the CI pipeline for ${{ github.workflow }}. Please check the logs! ❌'

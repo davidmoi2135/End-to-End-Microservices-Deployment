@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: product-service
+  namespace: spring-microservices
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: phanphan1504/product-service:latest # CI sẽ tự động thay thế tag này
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+  strategy:
+    canary:
+      steps:
+        - setWeight: 20
+        - pause: { duration: 5m } # Đợi 5 phút để theo dõi log/metric
+        - setWeight: 50
+        - pause: { duration: 2m }
+        - setWeight: 100
