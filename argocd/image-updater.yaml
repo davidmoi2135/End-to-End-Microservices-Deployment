@@ -1,0 +1,62 @@
+# Requires Argo CD Image Updater v1.x and Git write credentials that can push
+# back to this repository. If Argo CD repo credentials are read-only, replace
+# `method: git` with `method: git:secret:<namespace>/<secret>`.
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: spring-microservices-image-updater
+  namespace: argocd
+spec:
+  writeBackConfig:
+    method: git
+    gitConfig:
+      writeBackTarget: kustomization
+  applicationRefs:
+    - namePattern: spring-microservices
+      commonUpdateSettings:
+        updateStrategy: digest
+      images:
+        - alias: product-service
+          imageName: kaingyn615/product-service:main
+        - alias: cart-service
+          imageName: kaingyn615/cart-service:main
+        - alias: payment-service
+          imageName: kaingyn615/payment-service:main
+        - alias: discovery-server
+          imageName: kaingyn615/discovery-server:main
+        - alias: api-gateway
+          imageName: kaingyn615/api-gateway:main
+        - alias: order-service
+          imageName: kaingyn615/order-service:main
+        - alias: inventory-service
+          imageName: kaingyn615/inventory-service:main
+        - alias: notification-service
+          imageName: kaingyn615/notification-service:main
+        - alias: admin-server
+          imageName: kaingyn615/admin-server:main
+        - alias: frontend
+          imageName: kaingyn615/frontend:main
+    - namePattern: spring-microservices-staging
+      commonUpdateSettings:
+        updateStrategy: digest
+      images:
+        - alias: product-service
+          imageName: kaingyn615/product-service:dev
+        - alias: cart-service
+          imageName: kaingyn615/cart-service:dev
+        - alias: payment-service
+          imageName: kaingyn615/payment-service:dev
+        - alias: discovery-server
+          imageName: kaingyn615/discovery-server:dev
+        - alias: api-gateway
+          imageName: kaingyn615/api-gateway:dev
+        - alias: order-service
+          imageName: kaingyn615/order-service:dev
+        - alias: inventory-service
+          imageName: kaingyn615/inventory-service:dev
+        - alias: notification-service
+          imageName: kaingyn615/notification-service:dev
+        - alias: admin-server
+          imageName: kaingyn615/admin-server:dev
+        - alias: frontend
+          imageName: kaingyn615/frontend:dev

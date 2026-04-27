@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spring-microservices
+  name: spring-microservices-staging
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/davidmoi2135/End-to-End-Microservices-Deployment.git
-    targetRevision: main
-    path: spring-boot-app/k8s
+    targetRevision: dev
+    path: spring-boot-app/k8s-staging
   destination:
     server: https://kubernetes.default.svc
-    namespace: spring-microservices
+    namespace: spring-microservices-staging
   syncPolicy:
     automated:
       prune: true

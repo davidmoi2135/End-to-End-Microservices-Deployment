@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: product-service
-  namespace: spring-microservices
+  namespace: spring-microservices-staging
 spec:
   replicas: 2
   selector:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: kaingyn615/product-service:latest # Image Updater sẽ quản lý tag thực tế
+          image: kaingyn615/product-service:latest
           ports:
             - containerPort: 8080
           env:
@@ -25,7 +25,7 @@ spec:
     canary:
       steps:
         - setWeight: 20
-        - pause: { duration: 5m } # Đợi 5 phút để theo dõi log/metric
+        - pause: { duration: 5m }
         - setWeight: 50
         - pause: { duration: 2m }
         - setWeight: 100

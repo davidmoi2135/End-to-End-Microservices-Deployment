@@ -34,6 +34,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <docker.image.prefix>registry.hub.docker.com/kaingyn615</docker.image.prefix>
     </properties>
 
     <dependencyManagement>
@@ -93,7 +94,7 @@
                         <image>eclipse-temurin:17.0.4.1_1-jre</image>
                     </from>
                     <to>
-                        <image>registry.hub.docker.com/phanphan1504/${project.artifactId}:latest</image>
+                        <image>${docker.image.prefix}/${project.artifactId}:latest</image>
                     </to>
                 </configuration>
             </plugin>

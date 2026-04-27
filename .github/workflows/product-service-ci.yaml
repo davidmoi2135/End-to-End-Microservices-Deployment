@@ -2,7 +2,7 @@ name: Product Service CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
     paths:
       - 'spring-boot-app/product-service/**'
 
@@ -40,12 +40,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.sha }} . 
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.ref_name }} -t ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.ref_name }}-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.sha }}'
+          image-ref: '${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.ref_name }}-${{ github.sha }}'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -53,17 +53,9 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.sha }}
-
-      # Bước GitOps: Cập nhật manifest để ArgoCD nhận diện
-      - name: Update Kubernetes Manifest
         run: |
-          sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.sha }}|g" ../k8s/canary-rollouts.yaml
-          git config --global user.email "ci-bot@example.com"
-          git config --global user.name "CI Bot"
-          git add ../k8s/canary-rollouts.yaml
-          git commit -m "chore: update product-service image to ${{ github.sha }} [skip ci]"
-          git push
+          docker push ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/product-service:${{ github.ref_name }}-${{ github.sha }}
 
       - name: Send Slack Notification (Success)
         if: success()
@@ -71,8 +63,8 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: 'good'
-          SLACK_TITLE: 'Build & Canary Deployment Triggered'
-          SLACK_MESSAGE: 'Service: product-service has been updated to ${{ github.sha }}. ArgoCD is now performing Canary deployment! 🚀'
+          SLACK_TITLE: 'Build Success'
+          SLACK_MESSAGE: 'Service: product-service image tags ${{ github.ref_name }} and ${{ github.ref_name }}-${{ github.sha }} were pushed successfully. Image Updater will reconcile GitOps manifests. 🚀'
 
       - name: Send Slack Notification (Failure)
         if: failure()

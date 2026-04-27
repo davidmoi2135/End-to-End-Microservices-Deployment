@@ -2,7 +2,7 @@ name: Discovery Server CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
     paths:
       - 'spring-boot-app/discovery-server/**'
 
@@ -47,12 +47,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.sha }} . 
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.ref_name }} -t ${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.ref_name }}-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: '${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.sha }}'
+          image-ref: '${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.ref_name }}-${{ github.sha }}'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -60,7 +60,9 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.sha }}
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/discovery-server:${{ github.ref_name }}-${{ github.sha }}
 
       - name: Slack Notification - Success
         if: success()
