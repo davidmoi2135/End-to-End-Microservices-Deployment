@@ -92,32 +92,76 @@ metadata:
 data:
   realm-export.json: |
     {
-        "id": "spring-boot-ms-realm",
         "realm": "spring-boot-ms-realm",
         "enabled": true,
+        "sslRequired": "external",
         "registrationAllowed": true,
+        "loginWithEmailAllowed": true,
+        "resetPasswordAllowed": true,
+        "accessTokenLifespan": 1800,
+        "ssoSessionIdleTimeout": 1800,
+        "ssoSessionMaxLifespan": 36000,
+        "defaultRoles": ["USER", "offline_access", "uma_authorization"],
         "roles": {
-          "realm": [
-            { "name": "ADMIN", "description": "Admin role" },
-            { "name": "USER", "description": "User role" }
-          ]
+            "realm": [
+                { "name": "ADMIN", "description": "Administrator with full access" },
+                { "name": "USER", "description": "Standard customer" }
+            ]
         },
         "clients": [
-          {
-            "clientId": "spring-cloud-client",
-            "secret": "**********",
-            "serviceAccountsEnabled": true,
-            "publicClient": false,
-            "protocol": "openid-connect"
-          },
-          {
-            "clientId": "frontend-client",
-            "enabled": true,
-            "publicClient": true,
-            "protocol": "openid-connect",
-            "redirectUris": ["*"],
-            "webOrigins": ["*"]
-          }
+            {
+                "clientId": "spring-cloud-client",
+                "enabled": true,
+                "publicClient": true,
+                "directAccessGrantsEnabled": true,
+                "standardFlowEnabled": true,
+                "redirectUris": ["*"],
+                "webOrigins": ["+"],
+                "protocol": "openid-connect",
+                "fullScopeAllowed": true,
+                "attributes": { "post.logout.redirect.uris": "+" }
+            },
+            {
+                "clientId": "spring-boot-microservices",
+                "enabled": true,
+                "bearerOnly": true,
+                "protocol": "openid-connect"
+            },
+            {
+                "clientId": "frontend-client",
+                "enabled": true,
+                "publicClient": true,
+                "directAccessGrantsEnabled": true,
+                "redirectUris": ["*"],
+                "webOrigins": ["*"],
+                "protocol": "openid-connect"
+            }
+        ],
+        "users": [
+            {
+                "username": "admin",
+                "enabled": true,
+                "email": "admin@example.com",
+                "firstName": "Admin",
+                "lastName": "User",
+                "emailVerified": true,
+                "credentials": [
+                    { "type": "password", "value": "admin123", "temporary": false }
+                ],
+                "realmRoles": ["ADMIN", "USER"]
+            },
+            {
+                "username": "customer",
+                "enabled": true,
+                "email": "customer@example.com",
+                "firstName": "Customer",
+                "lastName": "Demo",
+                "emailVerified": true,
+                "credentials": [
+                    { "type": "password", "value": "customer123", "temporary": false }
+                ],
+                "realmRoles": ["USER"]
+            }
         ]
     }
 ---

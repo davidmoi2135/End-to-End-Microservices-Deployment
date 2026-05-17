@@ -79,16 +79,16 @@
     ],
     "users": [
         {
-            "username": "admin1",
+            "username": "admin",
             "enabled": true,
-            "email": "admin1@example.com",
+            "email": "admin@example.com",
             "firstName": "Admin",
             "lastName": "User",
             "emailVerified": true,
             "credentials": [
                 {
                     "type": "password",
-                    "value": "admin123",
+                    "value": "admin23",
                     "temporary": false
                 }
             ],
@@ -98,16 +98,16 @@
             ]
         },
         {
-            "username": "customer1",
+            "username": "customer",
             "enabled": true,
-            "email": "customer1@example.com",
+            "email": "customer@example.com",
             "firstName": "Customer",
             "lastName": "Demo",
             "emailVerified": true,
             "credentials": [
                 {
                     "type": "password",
-                    "value": "customer123",
+                    "value": "customer23",
                     "temporary": false
                 }
             ],
