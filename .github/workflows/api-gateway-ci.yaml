@@ -3,6 +3,9 @@ name: API Gateway CI
 on:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'spring-boot-app/api-gateway/**'
+      - '.github/workflows/api-gateway-ci.yaml'
 
 jobs:
   build-and-push:

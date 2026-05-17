@@ -3,6 +3,9 @@ name: Inventory Service CI
 on:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'spring-boot-app/inventory-service/**'
+      - '.github/workflows/inventory-service-ci.yaml'
 
 jobs:
   build-and-push:

@@ -3,6 +3,9 @@ name: Admin Server CI
 on:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'spring-boot-app/admin-server/**'
+      - '.github/workflows/admin-server-ci.yaml'
 
 jobs:
   build-and-push:

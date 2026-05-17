@@ -3,6 +3,9 @@ name: Payment Service CI
 on:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'spring-boot-app/payment-service/**'
+      - '.github/workflows/payment-service-ci.yaml'
 
 jobs:
   build-and-push:
