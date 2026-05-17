@@ -3,9 +3,6 @@ name: Frontend CI
 on:
   push:
     branches: [ "main", "dev" ]
-    paths:
-      - 'spring-boot-app/frontend/**'
-      - '.github/workflows/frontend-ci.yaml'
 
 jobs:
   build-and-push:

@@ -3,9 +3,6 @@ name: Discovery Server CI
 on:
   push:
     branches: [ "main", "dev" ]
-    paths:
-      - 'spring-boot-app/discovery-server/**'
-      - '.github/workflows/discovery-server-ci.yaml'
 
 jobs:
   build-and-push:
