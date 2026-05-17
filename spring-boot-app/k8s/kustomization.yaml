@@ -19,22 +19,22 @@ resources:
   - monitoring/alertmanager.yaml
 images:
   - name: hiunehihi/product-service
-    digest: sha256:ab8b5724303c4ed653f5cb6ae522b8cb69d11cbb6854c8dc5544c0ab542683f6
+    digest: sha256:6fbe2b4bcb2a9db7ea3e196b5e4461837861480f7ded8738cb97066ff20545a8
   - name: hiunehihi/cart-service
-    digest: sha256:859623e6285d2cb4f136dc225a12f65f4e4bd1fca45080dd3af2e27b898fe934
+    digest: sha256:de8e4545b9a513cd939f0b6a356eb98668ae83319c65907e8b4c0993d6bfc9e3
   - name: hiunehihi/payment-service
-    digest: sha256:fddfc0dfcc576bb2ab51548d2451249515abb5eb3de9a786afa6b61ec1fe5b08
+    digest: sha256:a311e5e1d28167c410d049a37d421d55566318cdc7dbd70c3272529b34055765
   - name: hiunehihi/discovery-server
-    digest: sha256:1dd9db20511f9900b0347473e66cf8346b5b40923a66156a869a663647b4d996
+    digest: sha256:c8ae26869b9cb89e19cad5bed81a5fa6cacde5d0007d68d14e90706af34e05bb
   - name: hiunehihi/api-gateway
-    digest: sha256:33d67afafd41ffb5f59170604c4c4fd2ed46b74be5cd83d6e5c71ddea4682f39
+    digest: sha256:e193ebe67a79b148e2780cb81ae5c283b4db9383bf24a933b3262c730f894b2d
   - name: hiunehihi/order-service
-    digest: sha256:421fa5e00e87dc891990a2b4d9dea00c26f658be0c3e6dcc68d4b798aa8a228b
+    digest: sha256:7c6417d311077017e55d25360b774258e7a742d04079db55f52fa3abc4f4e5ad
   - name: hiunehihi/inventory-service
-    digest: sha256:3b29cce27a06ac394c9d7c99f6f6650455383e220521d9cb9be93f4ce9c982ab
+    digest: sha256:bc194605fbaa8a0b2bb9241acbb9927af34c614c19b6b6eedba3ebf9916ed72a
   - name: hiunehihi/notification-service
-    digest: sha256:07b4a53f27c125343fb34b0e52f481771b8220e3a73c62c92dcf68244bfd8938
+    digest: sha256:5cdbc8a437ab5b3a3705afd5c2b5b59125f3246a258f6abb23ad6cb7348be29f
   - name: hiunehihi/admin-server
-    digest: sha256:a3605f088c4a265df54246cdf9dbe30c2c44d4ead95c89825e21a1b7996379ca
+    digest: sha256:3da62074bfea87376610e19ea5ce79b76a6b1db05f0b2cb1683eea54eb264713
   - name: hiunehihi/frontend
-    digest: sha256:ea00c972bc9ecce516b439be872f410c7e021c4ebaaf753dafe43331ba662636
+    digest: sha256:c2d2c42037414900114b592a86dc2b2a13ca1073f8bcc755de8982fe9339a84d
