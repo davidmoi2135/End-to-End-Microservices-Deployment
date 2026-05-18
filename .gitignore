@@ -23,6 +23,12 @@ crash.*.log
 *.tfvars.json
 spring-boot-app/k8s/secrets.yaml
 spring-boot-app/k8s-staging/secrets.yaml
+argocd/notifications-secret.yaml
+argocd/git-creds-secret.yaml
+
+# kubeconfig fetched from cluster — chứa client cert/key
+terraform/kubeconfig
+kubeconfig
 
 # Bỏ qua file ghi đè cấu hình cục bộ
 override.tf
@@ -91,3 +97,4 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/argocd-image-updater-0.16.0/

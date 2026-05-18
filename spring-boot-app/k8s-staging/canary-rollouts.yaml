@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: kaingyn615/product-service:dev
+          image: hiunehihi/product-service:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -32,17 +32,16 @@ spec:
             - name: SPRING_DATA_MONGODB_URI
               value: mongodb://mongo:27017/product-service
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 150m

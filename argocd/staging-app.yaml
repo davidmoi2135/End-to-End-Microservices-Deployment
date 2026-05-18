@@ -3,6 +3,45 @@ kind: Application
 metadata:
   name: spring-microservices-staging
   namespace: argocd
+  annotations:
+    # === ArgoCD Image Updater ===
+    argocd-image-updater.argoproj.io/image-list: >-
+      product=hiunehihi/product-service,
+      cart=hiunehihi/cart-service,
+      payment=hiunehihi/payment-service,
+      discovery=hiunehihi/discovery-server,
+      gateway=hiunehihi/api-gateway,
+      order=hiunehihi/order-service,
+      inventory=hiunehihi/inventory-service,
+      notification=hiunehihi/notification-service,
+      admin=hiunehihi/admin-server,
+      frontend=hiunehihi/frontend
+    argocd-image-updater.argoproj.io/product.update-strategy: digest
+    argocd-image-updater.argoproj.io/product.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/cart.update-strategy: digest
+    argocd-image-updater.argoproj.io/cart.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/payment.update-strategy: digest
+    argocd-image-updater.argoproj.io/payment.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/discovery.update-strategy: digest
+    argocd-image-updater.argoproj.io/discovery.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/gateway.update-strategy: digest
+    argocd-image-updater.argoproj.io/gateway.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/order.update-strategy: digest
+    argocd-image-updater.argoproj.io/order.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/inventory.update-strategy: digest
+    argocd-image-updater.argoproj.io/inventory.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/notification.update-strategy: digest
+    argocd-image-updater.argoproj.io/notification.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/admin.update-strategy: digest
+    argocd-image-updater.argoproj.io/admin.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/frontend.update-strategy: digest
+    argocd-image-updater.argoproj.io/frontend.allow-tags: regexp:^dev$
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    argocd-image-updater.argoproj.io/write-back-target: kustomization:spring-boot-app/k8s-staging
+    argocd-image-updater.argoproj.io/git-branch: dev
+    # === Slack notification subscriptions ===
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: deployments-staging
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: deployments-staging
 spec:
   project: default
   source:
@@ -18,3 +57,10 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  revisionHistoryLimit: 10

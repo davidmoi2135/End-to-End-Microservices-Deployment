@@ -16,7 +16,6 @@ resources:
   - monitoring/prometheus-deployment.yaml
   - monitoring/prometheus-config.yaml
   - monitoring/grafana.yaml
-  - hpa.yaml
 
 images:
   - name: hiunehihi/product-service

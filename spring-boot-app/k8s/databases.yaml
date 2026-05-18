@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongo-pvc
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -15,6 +17,8 @@ kind: Service
 metadata:
   name: mongo
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 27017
@@ -26,6 +30,8 @@ kind: Deployment
 metadata:
   name: mongo
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -70,6 +76,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-order-pvc
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -82,6 +90,8 @@ kind: Service
 metadata:
   name: postgres-order
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 5431
@@ -94,6 +104,8 @@ kind: Deployment
 metadata:
   name: postgres-order
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -151,6 +163,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-inventory-pvc
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -163,6 +177,8 @@ kind: Service
 metadata:
   name: postgres-inventory
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 5432
@@ -174,6 +190,8 @@ kind: Deployment
 metadata:
   name: postgres-inventory
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -229,6 +247,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: keycloak-mysql-pvc
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -241,6 +261,8 @@ kind: Service
 metadata:
   name: keycloak-mysql
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 3306
@@ -252,6 +274,8 @@ kind: Deployment
 metadata:
   name: keycloak-mysql
   namespace: spring-microservices
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:

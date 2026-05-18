@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: cart-service
-          image: kaingyn615/cart-service:dev
+          image: hiunehihi/cart-service:dev
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -42,17 +42,16 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 100m
@@ -88,7 +87,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: kaingyn615/payment-service:dev
+          image: hiunehihi/payment-service:dev
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -115,17 +114,16 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 100m

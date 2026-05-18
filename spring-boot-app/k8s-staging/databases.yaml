@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongo-pvc
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -15,6 +17,8 @@ kind: Service
 metadata:
   name: mongo
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 27017
@@ -26,6 +30,8 @@ kind: Deployment
 metadata:
   name: mongo
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -70,6 +76,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-order-pvc
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -82,6 +90,8 @@ kind: Service
 metadata:
   name: postgres-order
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 5432
@@ -93,6 +103,8 @@ kind: Deployment
 metadata:
   name: postgres-order
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -148,6 +160,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-inventory-pvc
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -160,6 +174,8 @@ kind: Service
 metadata:
   name: postgres-inventory
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 5432
@@ -171,6 +187,8 @@ kind: Deployment
 metadata:
   name: postgres-inventory
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -220,81 +238,3 @@ spec:
         - name: postgres-inventory-data
           persistentVolumeClaim:
             claimName: postgres-inventory-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: keycloak-postgres-pvc
-  namespace: spring-microservices-staging
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: keycloak-postgres
-  namespace: spring-microservices-staging
-spec:
-  ports:
-    - port: 5432
-  selector:
-    app: keycloak-postgres
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: keycloak-postgres
-  namespace: spring-microservices-staging
-spec:
-  selector:
-    matchLabels:
-      app: keycloak-postgres
-  template:
-    metadata:
-      labels:
-        app: keycloak-postgres
-    spec:
-      containers:
-        - name: keycloak-postgres
-          image: postgres:16
-          env:
-            - name: POSTGRES_DB
-              value: keycloak
-            - name: POSTGRES_USER
-              value: keycloak
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-secrets
-                  key: keycloak-db-password
-          ports:
-            - containerPort: 5432
-          readinessProbe:
-            tcpSocket:
-              port: 5432
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: 5432
-            initialDelaySeconds: 30
-            periodSeconds: 20
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-            limits:
-              cpu: 500m
-              memory: 512Mi
-          volumeMounts:
-            - name: keycloak-postgres-data
-              mountPath: /var/lib/postgresql/data
-              subPath: data
-      volumes:
-        - name: keycloak-postgres-data
-          persistentVolumeClaim:
-            claimName: keycloak-postgres-pvc

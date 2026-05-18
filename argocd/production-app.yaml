@@ -3,6 +3,36 @@ kind: Application
 metadata:
   name: spring-microservices
   namespace: argocd
+  annotations:
+    # === ArgoCD Image Updater ===
+    argocd-image-updater.argoproj.io/image-list: >-
+      product=hiunehihi/product-service:main,
+      cart=hiunehihi/cart-service:main,
+      payment=hiunehihi/payment-service:main,
+      discovery=hiunehihi/discovery-server:main,
+      gateway=hiunehihi/api-gateway:main,
+      order=hiunehihi/order-service:main,
+      inventory=hiunehihi/inventory-service:main,
+      notification=hiunehihi/notification-service:main,
+      admin=hiunehihi/admin-server:main,
+      frontend=hiunehihi/frontend:main
+    argocd-image-updater.argoproj.io/product.update-strategy: digest
+    argocd-image-updater.argoproj.io/cart.update-strategy: digest
+    argocd-image-updater.argoproj.io/payment.update-strategy: digest
+    argocd-image-updater.argoproj.io/discovery.update-strategy: digest
+    argocd-image-updater.argoproj.io/gateway.update-strategy: digest
+    argocd-image-updater.argoproj.io/order.update-strategy: digest
+    argocd-image-updater.argoproj.io/inventory.update-strategy: digest
+    argocd-image-updater.argoproj.io/notification.update-strategy: digest
+    argocd-image-updater.argoproj.io/admin.update-strategy: digest
+    argocd-image-updater.argoproj.io/frontend.update-strategy: digest
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    argocd-image-updater.argoproj.io/write-back-target: kustomization:.
+    argocd-image-updater.argoproj.io/git-branch: main
+    # === Slack notification subscriptions ===
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: deployments
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: deployments
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: deployments
 spec:
   project: default
   source:
@@ -18,3 +48,10 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  revisionHistoryLimit: 10

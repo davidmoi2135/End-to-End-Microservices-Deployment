@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+data:
+  service.slack: |
+    token: $slack-token
+
+  template.app-sync-succeeded: |
+    message: |
+      :white_check_mark: Application *{{.app.metadata.name}}* sync succeeded.
+      Revision: {{.app.status.sync.revision}}
+      Sync status: {{.app.status.sync.status}}
+      Health status: {{.app.status.health.status}}
+    slack:
+      attachments: |
+        [{
+          "title": "{{.app.metadata.name}}",
+          "color": "#18be52",
+          "fields": [
+            {"title": "Sync Status", "value": "{{.app.status.sync.status}}", "short": true},
+            {"title": "Repository", "value": "{{.app.spec.source.repoURL}}", "short": true},
+            {"title": "Revision", "value": "{{.app.status.sync.revision}}", "short": false}
+          ]
+        }]
+
+  template.app-sync-failed: |
+    message: |
+      :x: Application *{{.app.metadata.name}}* sync FAILED.
+      Revision: {{.app.status.sync.revision}}
+      Operation message: {{.app.status.operationState.message}}
+    slack:
+      attachments: |
+        [{
+          "title": "{{.app.metadata.name}}",
+          "color": "#E96D76",
+          "fields": [
+            {"title": "Sync Status", "value": "{{.app.status.sync.status}}", "short": true},
+            {"title": "Health", "value": "{{.app.status.health.status}}", "short": true},
+            {"title": "Error", "value": "{{.app.status.operationState.message}}", "short": false}
+          ]
+        }]
+
+  template.app-health-degraded: |
+    message: |
+      :warning: Application *{{.app.metadata.name}}* has degraded health.
+      Health status: {{.app.status.health.status}}
+    slack:
+      attachments: |
+        [{
+          "title": "{{.app.metadata.name}}",
+          "color": "#f4c430",
+          "fields": [
+            {"title": "Health", "value": "{{.app.status.health.status}}", "short": true},
+            {"title": "Sync Status", "value": "{{.app.status.sync.status}}", "short": true}
+          ]
+        }]
+
+  trigger.on-sync-succeeded: |
+    - description: Application syncs succeeded
+      send: [app-sync-succeeded]
+      when: app.status.operationState.phase in ['Succeeded']
+
+  trigger.on-sync-failed: |
+    - description: Application syncs failed
+      send: [app-sync-failed]
+      when: app.status.operationState.phase in ['Error', 'Failed']
+
+  trigger.on-health-degraded: |
+    - description: Application health became degraded
+      send: [app-health-degraded]
+      when: app.status.health.status == 'Degraded'
+
+  subscriptions: |
+    - recipients:
+        - slack:deployments
+      triggers:
+        - on-sync-failed
+        - on-health-degraded
+        - on-sync-succeeded

@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: keycloak-postgres-pvc
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -15,6 +17,8 @@ kind: Service
 metadata:
   name: keycloak-postgres
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   ports:
     - port: 5432
@@ -26,6 +30,8 @@ kind: Deployment
 metadata:
   name: keycloak-postgres
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -118,6 +124,8 @@ kind: Service
 metadata:
   name: keycloak
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   type: NodePort
   ports:
@@ -132,6 +140,8 @@ kind: Deployment
 metadata:
   name: keycloak
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     matchLabels:
@@ -143,22 +153,26 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:legacy
+          image: quay.io/keycloak/keycloak:25.0
           args: ["start-dev", "--import-realm"]
           env:
-            - name: DB_VENDOR
-              value: POSTGRES
-            - name: DB_ADDR
-              value: keycloak-postgres
-            - name: DB_DATABASE
+            - name: KC_DB
+              value: postgres
+            - name: KC_DB_URL
+              value: jdbc:postgresql://keycloak-postgres:5432/keycloak
+            - name: KC_DB_USERNAME
               value: keycloak
-            - name: DB_USER
-              value: keycloak
-            - name: DB_PASSWORD
+            - name: KC_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: app-secrets
                   key: keycloak-db-password
+            - name: KC_HEALTH_ENABLED
+              value: "true"
+            - name: KC_HTTP_ENABLED
+              value: "true"
+            - name: KC_HOSTNAME_STRICT
+              value: "false"
             - name: KEYCLOAK_ADMIN
               value: admin
             - name: KEYCLOAK_ADMIN_PASSWORD

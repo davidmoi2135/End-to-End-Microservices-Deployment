@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: discovery-server
-          image: kaingyn615/discovery-server:main
+          image: hiunehihi/discovery-server:main
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -42,13 +42,13 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 8761
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
               port: 8761
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
             failureThreshold: 5
           resources:
             requests:
@@ -88,7 +88,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: kaingyn615/api-gateway:main
+          image: hiunehihi/api-gateway:main
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -107,17 +107,16 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 150m
@@ -164,7 +163,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: kaingyn615/order-service:main
+          image: hiunehihi/order-service:main
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -177,7 +176,7 @@ spec:
             - name: EUREKA_INSTANCE_HOSTNAME
               value: order-service
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://postgres-order:5432/order-service
+              value: jdbc:postgresql://postgres-order:5431/order-service
             - name: SPRING_DATASOURCE_USERNAME
               value: ptechie
             - name: SPRING_DATASOURCE_PASSWORD
@@ -190,17 +189,16 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 150m
@@ -236,7 +234,7 @@ spec:
     spec:
       containers:
         - name: inventory-service
-          image: kaingyn615/inventory-service:main
+          image: hiunehihi/inventory-service:main
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -262,17 +260,16 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 150m
@@ -308,7 +305,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: kaingyn615/notification-service:main
+          image: hiunehihi/notification-service:main
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -320,20 +317,21 @@ spec:
                   key: eureka-default-zone
             - name: EUREKA_INSTANCE_HOSTNAME
               value: notification-service
-          ports:
-            - containerPort: 8080
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: broker:29092
+          # Notification-service is a pure Kafka consumer (no HTTP server),
+          # so we use exec probe checking the JVM process is alive (PID 1).
           readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 45
-            periodSeconds: 10
+            exec:
+              command: ["sh", "-c", "kill -0 1"]
+            initialDelaySeconds: 60
+            periodSeconds: 30
           livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            exec:
+              command: ["sh", "-c", "kill -0 1"]
+            initialDelaySeconds: 180
+            periodSeconds: 60
+            failureThreshold: 5
           resources:
             requests:
               cpu: 100m
@@ -369,7 +367,7 @@ spec:
     spec:
       containers:
         - name: admin-server
-          image: kaingyn615/admin-server:main
+          image: hiunehihi/admin-server:main
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -384,17 +382,16 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 45
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /actuator/health
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 90
-            periodSeconds: 20
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            failureThreshold: 5
           resources:
             requests:
               cpu: 100m
