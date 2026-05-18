@@ -3,6 +3,9 @@ name: Payment Service CI
 on:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'spring-boot-app/payment-service/**'
+      - '.github/workflows/payment-service-ci.yaml'
 
 jobs:
   build-and-push:
@@ -20,19 +23,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
 
       - name: Cache SonarQube packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar

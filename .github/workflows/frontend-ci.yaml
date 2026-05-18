@@ -3,6 +3,9 @@ name: Frontend CI
 on:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'spring-boot-app/frontend/**'
+      - '.github/workflows/frontend-ci.yaml'
 
 jobs:
   build-and-push:
@@ -20,18 +23,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0  # SonarQube cần lịch sử git để phân tích tốt hơn
 
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: spring-boot-app/frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('spring-boot-app/frontend/package-lock.json') }}
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
