@@ -1,15 +1,18 @@
 #!/bin/bash
-# Get kubeconfig from the k3s master node
-# Usage: ./get-kubeconfig.sh <master-public-ip>
-#
-# Or manually:
-#   scp -i ~/.ssh/labsuser.pem ubuntu@<master-ip>:/etc/rancher/k3s/k3s.yaml ./kubeconfig
-#   sed -i '' 's/127.0.0.1/<master-public-ip>/g' ./kubeconfig
+# Fetch kubeconfig from the k3s master.
+# ALB is L7 and cannot proxy the kube API, so the kubeconfig points
+# directly at the master's public IP.
+set -euo pipefail
 
-MASTER_IP="${1:-3.85.27.167}"
-echo "Master node public IP: $MASTER_IP"
-echo ""
-echo "To get kubeconfig, run:"
-echo "  scp -i ~/.ssh/labsuser.pem ubuntu@$MASTER_IP:/etc/rancher/k3s/k3s.yaml ./kubeconfig"
-echo "  sed -i '' 's/127.0.0.1/$MASTER_IP/g' ./kubeconfig"
-echo "  export KUBECONFIG=./kubeconfig"
+MASTER_IP="${1:-13.228.79.32}"
+KEY="${SSH_KEY:-./k3s-key.pem}"
+
+echo "Fetching kubeconfig from $MASTER_IP ..."
+ssh -o StrictHostKeyChecking=no -i "$KEY" ubuntu@"$MASTER_IP" \
+  'sudo cat /etc/rancher/k3s/k3s.yaml' \
+  | sed "s|https://127.0.0.1:6443|https://$MASTER_IP:6443|" > ./kubeconfig
+chmod 600 ./kubeconfig
+
+echo "Done. Run:"
+echo "  export KUBECONFIG=$(pwd)/kubeconfig"
+echo "  kubectl get nodes"

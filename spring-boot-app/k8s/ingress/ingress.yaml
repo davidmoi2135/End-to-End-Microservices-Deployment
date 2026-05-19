@@ -4,14 +4,9 @@ metadata:
   name: microservices-ingress
   namespace: spring-microservices
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
-    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
+  ingressClassName: traefik
   tls:
     - hosts:
         - api.ecommerce-demo.com
@@ -21,15 +16,15 @@ spec:
     - host: api.ecommerce-demo.com
       http:
         paths:
-          - path: /api(/|$)(.*)
-            pathType: ImplementationSpecific
+          - path: /api
+            pathType: Prefix
             backend:
               service:
                 name: api-gateway
                 port:
-                  number: 8080
-          - path: /auth(/|$)(.*)
-            pathType: ImplementationSpecific
+                  number: 8085
+          - path: /auth
+            pathType: Prefix
             backend:
               service:
                 name: keycloak
@@ -38,7 +33,7 @@ spec:
     - host: frontend.ecommerce-demo.com
       http:
         paths:
-          - path: /(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
@@ -52,10 +47,9 @@ metadata:
   name: monitoring-ingress
   namespace: monitoring
   annotations:
-    kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
+  ingressClassName: traefik
   tls:
     - hosts:
         - prometheus.ecommerce-demo.com
