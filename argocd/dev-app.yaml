@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spring-microservices-staging
+  name: spring-microservices-dev
   namespace: argocd
   annotations:
     # === ArgoCD Image Updater ===
@@ -37,20 +37,21 @@ metadata:
     argocd-image-updater.argoproj.io/frontend.update-strategy: digest
     argocd-image-updater.argoproj.io/frontend.allow-tags: regexp:^dev$
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-    argocd-image-updater.argoproj.io/write-back-target: kustomization:spring-boot-app/k8s-staging
+    argocd-image-updater.argoproj.io/write-back-target: kustomization:spring-boot-app/k8s/overlays/dev
     argocd-image-updater.argoproj.io/git-branch: dev
     # === Slack notification subscriptions ===
-    notifications.argoproj.io/subscribe.on-sync-failed.slack: deployments-staging
-    notifications.argoproj.io/subscribe.on-health-degraded.slack: deployments-staging
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: deployments-dev
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: deployments-dev
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: deployments-dev
 spec:
   project: default
   source:
     repoURL: https://github.com/davidmoi2135/End-to-End-Microservices-Deployment.git
     targetRevision: dev
-    path: spring-boot-app/k8s-staging
+    path: spring-boot-app/k8s/overlays/dev
   destination:
     server: https://kubernetes.default.svc
-    namespace: spring-microservices-staging
+    namespace: spring-microservices-dev
   syncPolicy:
     automated:
       prune: true

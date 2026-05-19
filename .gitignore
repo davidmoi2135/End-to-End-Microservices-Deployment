@@ -23,6 +23,9 @@ crash.*.log
 *.tfvars.json
 spring-boot-app/k8s/secrets.yaml
 spring-boot-app/k8s-staging/secrets.yaml
+spring-boot-app/k8s/overlays/dev/secrets.yaml
+spring-boot-app/k8s/overlays/production/secrets.yaml
+spring-boot-app/k8s/base/monitoring/
 argocd/notifications-secret.yaml
 argocd/git-creds-secret.yaml
 

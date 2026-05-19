@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservices-ingress
+  namespace: spring-microservices
+spec:
+  tls:
+    - hosts:
+        - api-dev.ecommerce-demo.com
+        - frontend-dev.ecommerce-demo.com
+      secretName: microservices-dev-tls
+  rules:
+    - host: api-dev.ecommerce-demo.com
+      http:
+        paths:
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 8085
+          - path: /auth(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: keycloak
+                port:
+                  number: 8080
+    - host: frontend-dev.ecommerce-demo.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
