@@ -6,12 +6,12 @@
 #   4. Install cert-manager (TLS / Let's Encrypt ClusterIssuer)
 #   5. Create git-creds secret (GitHub PAT) for Image Updater write-back
 #   6. Create app namespaces and apply user-supplied secrets
-#   7. Register the two ArgoCD Application CRs (dev + production)
+#   7. Register the two ArgoCD Application CRs (staging + production)
 #
 # Prerequisites:
 #   - `terraform apply` already finished and `kubectl get nodes` works
 #   - KUBECONFIG env var points to the cluster kubeconfig
-#   - Repo checked out on `main` branch (we still need `origin/dev` fetched)
+#   - Repo checked out on a branch that contains argocd/*-app.yaml (main or dev)
 #
 # Usage:
 #   export KUBECONFIG=/path/to/kubeconfig
@@ -29,7 +29,7 @@ ROLLOUTS_NS=argo-rollouts
 ROLLOUTS_VERSION=v1.7.2
 CERTMGR_NS=cert-manager
 CERTMGR_VERSION=v1.15.3
-DEV_NS=spring-microservices-dev
+STAGING_NS=spring-microservices-staging
 PROD_NS=spring-microservices
 
 # ---------- helpers ----------
@@ -114,8 +114,8 @@ fi
 
 # ---------- step 6: namespaces + app secrets ----------
 log "Step 6/7 — Create app namespaces"
-kubectl create namespace "$DEV_NS"  --dry-run=client -o yaml | kubectl apply -f -
-kubectl create namespace "$PROD_NS" --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace "$STAGING_NS" --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace "$PROD_NS"    --dry-run=client -o yaml | kubectl apply -f -
 
 apply_secret_if_present() {
   local file="$1" ns="$2"
@@ -128,9 +128,9 @@ apply_secret_if_present() {
 }
 
 apply_secret_if_present "spring-boot-app/k8s/secrets.yaml" "$PROD_NS"
-# secrets.yaml for dev typically lives in the same place when checked out on dev branch.
-# If you keep a separate copy locally, override here:
-apply_secret_if_present "${DEV_SECRETS_FILE:-/tmp/secrets-dev.yaml}" "$DEV_NS"
+# Staging secrets live under k8s-staging when checked out on the dev branch.
+# If you keep a separate copy locally, override with STAGING_SECRETS_FILE.
+apply_secret_if_present "${STAGING_SECRETS_FILE:-spring-boot-app/k8s-staging/secrets.yaml}" "$STAGING_NS"
 
 # Notification ConfigMap + Secret (Slack) — only if user prepared the real secret
 if [ -f "argocd/notifications-cm.yaml" ]; then
@@ -141,13 +141,14 @@ apply_secret_if_present "${NOTIF_SECRET_FILE:-argocd/notifications-secret.yaml}"
 # ---------- step 7: register Applications ----------
 log "Step 7/7 — Register ArgoCD Applications"
 
-echo "  applying production app (from current branch HEAD)"
+echo "  applying production app"
 kubectl apply -f argocd/production-app.yaml
 
-echo "  fetching dev branch to read dev-app.yaml"
-git fetch origin dev --quiet || die "git fetch origin dev failed"
-echo "  applying dev app (from origin/dev)"
-git show origin/dev:argocd/dev-app.yaml | kubectl apply -f -
+# The staging Application already pins targetRevision=dev and
+# path=spring-boot-app/k8s-staging, so applying the manifest from the current
+# checkout is enough — ArgoCD pulls the actual workloads from origin/dev itself.
+echo "  applying staging app (tracks dev branch + k8s-staging)"
+kubectl apply -f argocd/staging-app.yaml
 
 # ---------- summary ----------
 log "Done — current Applications:"
@@ -167,9 +168,8 @@ Next steps
      # then browse to https://localhost:8080  (user: admin)
 
 3. Wait a few minutes for both Applications to reach Synced/Healthy.
-   - $DEV_NS  : auto-syncs every commit on 'dev' branch
-   - $PROD_NS : MANUAL sync (auto-sync disabled for safety)
-                Open the app in UI, review diff, click 'Sync' to deploy.
+   - $STAGING_NS : auto-syncs every commit on 'dev' branch
+   - $PROD_NS    : auto-syncs after Image Updater bumps digests on 'main'
 
 4. Apps reachable through the ALB:
      terraform -chdir=terraform output -raw alb_dns_name
