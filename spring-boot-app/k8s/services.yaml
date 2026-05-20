@@ -104,6 +104,8 @@ spec:
               value: TRACE
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
               value: http://keycloak:8080/realms/spring-boot-ms-realm
+            - name: KEYCLOAK_BASE_URL
+              value: http://keycloak:8080
           ports:
             - containerPort: 8080
           readinessProbe:

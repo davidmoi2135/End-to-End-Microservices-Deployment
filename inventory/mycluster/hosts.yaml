@@ -3,32 +3,30 @@ all:
     kube_control_plane:
       hosts:
                 k3s-master-1:
-          ansible_host: 3.85.27.167
+          ansible_host: 13.228.79.32
           ansible_user: ubuntu
           
-          internal_address: 172.31.28.235
+          internal_address: 172.31.46.169
                   
     kube_node:
       hosts:
                 k3s-worker-1:
-          ansible_host: 54.90.159.160
+          ansible_host: 54.254.183.155
           ansible_user: ubuntu
           
-          internal_address: 172.31.33.246
+          internal_address: 172.31.34.69
                           k3s-worker-2:
-          ansible_host: 98.92.140.135
+          ansible_host: 54.255.31.224
           ansible_user: ubuntu
           
-          internal_address: 172.31.11.90
+          internal_address: 172.31.31.220
                   
     etcd:
       hosts:
                 k3s-master-1:
-          ansible_host: 3.85.27.167
+          ansible_host: 13.228.79.32
         
     k8s_cluster:
       children:
         kube_control_plane: {}
         kube_node: {}
-
-    serivce_cluster: {}

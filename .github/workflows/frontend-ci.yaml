@@ -59,7 +59,11 @@ jobs:
 
       - name: Build Docker image
         if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
-        run: docker build -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }} -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }}-${{ github.sha }} .
+        env:
+          # URL gốc để frontend gọi API. Mặc định là DNS name của ALB (Cách 4 - truy cập qua ALB).
+          # Có thể override bằng GitHub Actions variable REACT_APP_API_BASE_URL.
+          REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL || 'http://k3s-free-alb-59400309.ap-southeast-1.elb.amazonaws.com' }}
+        run: docker build --build-arg REACT_APP_API_BASE_URL="$REACT_APP_API_BASE_URL" -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }} -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }}-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
