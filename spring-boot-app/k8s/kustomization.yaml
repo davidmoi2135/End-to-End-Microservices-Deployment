@@ -37,4 +37,4 @@ images:
   - name: hiunehihi/admin-server
     digest: sha256:feb806a8142f95338dcaedf2c5a35c48564870a9544aedf2bab55ba858a5f2d6
   - name: hiunehihi/frontend
-    digest: sha256:6a088e82baa265c21d5da9d01d513689c698106f3b1bcb943b0ab14976f00d68
+    digest: sha256:e566ad4721d98057bb401a551a7c54bce232687aa63edaf6b3909eaefa23bf51
