@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "ap-southeast-1"
+  default     = "us-east-1"
 }
 
 variable "project" {
@@ -13,13 +13,13 @@ variable "project" {
 variable "master_instance_type" {
   description = "Master EC2 type (c7i-flex.large = 2 vCPU / 4 GB; NOT free tier)"
   type        = string
-  default     = "c7i-flex.large"
+  default     = "t3.medium"
 }
 
 variable "worker_instance_type" {
   description = "Worker EC2 type (c7i-flex.large = 2 vCPU / 4 GB; NOT free tier)"
   type        = string
-  default     = "c7i-flex.large"
+  default     = "t3.medium"
 }
 
 variable "worker_count" {
