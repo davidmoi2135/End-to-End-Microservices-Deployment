@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ENVIRONMENT="dev"
+ENVIRONMENT="staging"
 APPLY_APP=false
 SYNC_APP=false
 WATCH_PODS=false
@@ -12,15 +12,15 @@ Usage:
   scripts/check-cicd-argocd-flow.sh [options]
 
 Options:
-  --env dev|production       Target GitOps environment. Default: dev
+  --env staging|production   Target GitOps environment. Default: staging
   --apply-app                Apply the ArgoCD Application manifest
   --sync-app                 Sync the ArgoCD app if argocd CLI is available
   --watch-pods               Watch target namespace pods after checks
   -h, --help                 Show help
 
 Examples:
-  scripts/check-cicd-argocd-flow.sh --env dev
-  scripts/check-cicd-argocd-flow.sh --env dev --apply-app --watch-pods
+  scripts/check-cicd-argocd-flow.sh --env staging
+  scripts/check-cicd-argocd-flow.sh --env staging --apply-app --watch-pods
   scripts/check-cicd-argocd-flow.sh --env production --apply-app --sync-app
 
 Notes:
@@ -103,24 +103,24 @@ while [[ $# -gt 0 ]]; do
 done
 
 case "$ENVIRONMENT" in
-  dev|staging)
+  staging)
     EXPECTED_BRANCH="dev"
-    K8S_PATH="spring-boot-app/k8s/overlays/dev"
-    APP_MANIFEST="argocd/dev-app.yaml"
-    APP_NAME="spring-microservices-dev"
-    NAMESPACE="spring-microservices-dev"
+    K8S_PATH="spring-boot-app/k8s-staging"
+    APP_MANIFEST="argocd/staging-app.yaml"
+    APP_NAME="spring-microservices-staging"
+    NAMESPACE="spring-microservices-staging"
     EXPECTED_TAG="dev"
     ;;
   production)
     EXPECTED_BRANCH="main"
-    K8S_PATH="spring-boot-app/k8s/overlays/production"
+    K8S_PATH="spring-boot-app/k8s"
     APP_MANIFEST="argocd/production-app.yaml"
     APP_NAME="spring-microservices"
     NAMESPACE="spring-microservices"
     EXPECTED_TAG="main"
     ;;
   *)
-    fail "--env must be dev or production"
+    fail "--env must be staging or production"
     exit 2
     ;;
 esac
@@ -228,7 +228,7 @@ else
   exit 1
 fi
 
-if search_quiet 'kind: Rollout' "/tmp/vshop-rendered-$ENVIRONMENT.yaml"; then
+if search_quiet 'kind: Rollout' "$K8S_PATH"; then
   warn "$K8S_PATH contains Argo Rollouts resources; the cluster needs the Rollout CRD installed"
 fi
 
@@ -298,10 +298,10 @@ cat <<EOF
 4. Watch deployment:
      kubectl get pods -n $NAMESPACE -w
 5. Test app:
-     dev frontend:        https://frontend-dev.ecommerce-demo.com
-     dev gateway:         https://api-dev.ecommerce-demo.com/api
-     production frontend: https://frontend.ecommerce-demo.com
-     production gateway:  https://api.ecommerce-demo.com/api
+     staging frontend:   http://localhost:31000
+     staging gateway:    http://localhost:31085
+     production frontend: http://localhost:30000
+     production gateway:  http://localhost:30085
 EOF
 
 if "$WATCH_PODS"; then

@@ -72,7 +72,7 @@ kubectl apply -f spring-boot-app/k8s/secrets.yaml
 Sau đó deploy toàn bộ manifest bằng Kustomize để Kubernetes dùng đúng image tag trong `spring-boot-app/k8s/kustomization.yaml`.
 
 ```bash
-kubectl apply -k spring-boot-app/k8s/overlays/production
+kubectl apply -k spring-boot-app/k8s
 ```
 
 Kustomize sẽ apply các nhóm tài nguyên chính:
@@ -116,7 +116,7 @@ kubectl apply -f argocd/production-app.yaml
 Application production trỏ đến:
 
 - `repoURL`: `https://github.com/davidmoi2135/End-to-End-Microservices-Deployment.git`
-- `path`: `spring-boot-app/k8s/overlays/production`
+- `path`: `spring-boot-app/k8s`
 - `targetRevision`: `main`
 
 Sau khi apply, ArgoCD sẽ đồng bộ manifest Kubernetes từ Git về cluster.
