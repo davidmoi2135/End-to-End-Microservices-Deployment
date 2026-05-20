@@ -87,6 +87,8 @@ kind: ConfigMap
 metadata:
   name: keycloak-realm
   namespace: spring-microservices-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 data:
   realm-export.json: |
     {
