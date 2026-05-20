@@ -27,7 +27,7 @@ images:
   - name: hiunehihi/discovery-server
     digest: sha256:44afd8158586a942e43344301a8d282a85d2ec0dc6ead1fd2e71f52b7c4fa442
   - name: hiunehihi/api-gateway
-    digest: sha256:1cbc83f538709e52b56ed44209c6a747dd66f315f74b43f44cd1126624e0e175
+    digest: sha256:3d8afa17d6da0590d50735cc7be02b52936a952da27f7b0358a788e36c86bef7
   - name: hiunehihi/order-service
     digest: sha256:71d20583ecf79379d534ea9c05b5957a94608fb24d8775d50ec2c6edb0cab3ae
   - name: hiunehihi/inventory-service
