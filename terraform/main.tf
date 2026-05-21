@@ -336,7 +336,7 @@ resource "aws_instance" "workers" {
   subnet_id                   = local.subnet_ids[count.index % length(local.subnet_ids)]
   vpc_security_group_ids      = [aws_security_group.k8s_sg.id]
   associate_public_ip_address = true
-  depends_on    = [aws_instance.master]
+  depends_on                  = [aws_instance.master]
 
   metadata_options {
     http_endpoint               = "enabled"
@@ -428,46 +428,16 @@ resource "local_file" "get_kubeconfig" {
   file_permission = "0755"
 }
 
-resource "local_file" "get_kubeconfig" {
-  content = <<-EOT
-    #!/bin/bash
-    # Get kubeconfig from the k3s master node
-    # Usage: ./get-kubeconfig.sh <master-public-ip>
-    #
-    # Or manually:
-    #   scp -i ~/.ssh/labsuser.pem ubuntu@<master-ip>:/etc/rancher/k3s/k3s.yaml ./kubeconfig
-    #   sed -i '' 's/127.0.0.1/<master-public-ip>/g' ./kubeconfig
-
-    MASTER_IP="$${1:-${aws_instance.master[0].public_ip}}"
-    echo "Master node public IP: $MASTER_IP"
-    echo ""
-    echo "To get kubeconfig, run:"
-    echo "  scp -i ~/.ssh/labsuser.pem ubuntu@$MASTER_IP:/etc/rancher/k3s/k3s.yaml ./kubeconfig"
-    echo "  sed -i '' 's/127.0.0.1/$MASTER_IP/g' ./kubeconfig"
-    echo "  export KUBECONFIG=./kubeconfig"
-  EOT
-  filename = "${path.module}/get-kubeconfig.sh"
-}
-
 output "cluster_info" {
   description = "k3s cluster node information"
   sensitive   = true
   value = {
-    vpc_id          = var.vpc_id
-    security_group  = aws_security_group.k8s_sg.id
-    master_ip       = aws_instance.master[0].public_ip
-    master_private  = aws_instance.master[0].private_ip
-    worker_ips      = aws_instance.workers[*].public_ip
-    worker_private  = aws_instance.workers[*].private_ip
-    k3s_token       = random_password.k3s_token.result
-  }
-}
-
-output "ssh_commands" {
-  description = "SSH commands to connect to nodes"
-  value = {
-    master  = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.master[0].public_ip}"
-    worker1 = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.workers[0].public_ip}"
-    worker2 = length(aws_instance.workers) > 1 ? "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.workers[1].public_ip}" : "no worker-2"
+    vpc_id         = data.aws_vpc.default.id
+    security_group = aws_security_group.k8s_sg.id
+    master_ip      = aws_instance.master[0].public_ip
+    master_private = aws_instance.master[0].private_ip
+    worker_ips     = aws_instance.workers[*].public_ip
+    worker_private = aws_instance.workers[*].private_ip
+    k3s_token      = random_password.k3s_token.result
   }
 }

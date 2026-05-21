@@ -78,12 +78,3 @@ output "next_steps" {
     https://${aws_instance.master[0].public_ip}:6443
   EOT
 }
-
-output "ssh_connect_cmds" {
-  description = "SSH commands to connect to cluster nodes"
-  value = {
-    master  = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.master[0].public_ip}"
-    worker1 = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.workers[0].public_ip}"
-    worker2 = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.workers[1].public_ip}"
-  }
-}
