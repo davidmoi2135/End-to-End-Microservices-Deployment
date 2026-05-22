@@ -21,20 +21,20 @@ images:
   - name: hiunehihi/product-service
     digest: sha256:cb86c153fcfac021f804da7c0109a1501ebab2d3efd3718f296f38556f715e99
   - name: hiunehihi/cart-service
-    digest: sha256:7c252a2362e69f772e6e1cf555955f50429f91c51d9363aa807826769e14a6c2
+    digest: sha256:b4e0b71b62eef480555fd2ca6e3a3a6bb8ee16ad597ab20bdafcefcc0b2c8626
   - name: hiunehihi/payment-service
-    digest: sha256:2d8cc63547da4faa2b4b36643d2650c5323ebfb71f5005b81c07f3a59dedc5b3
+    digest: sha256:deba51bd557009750a9b1fc4a943079dd613497bc021af376475c96f5f4c39b6
   - name: hiunehihi/discovery-server
-    digest: sha256:a3511d8b62ac8630f8226af87da1e407f4b1280245d9bf050cab23453c752e30
+    digest: sha256:44afd8158586a942e43344301a8d282a85d2ec0dc6ead1fd2e71f52b7c4fa442
   - name: hiunehihi/api-gateway
     digest: sha256:3d8afa17d6da0590d50735cc7be02b52936a952da27f7b0358a788e36c86bef7
   - name: hiunehihi/order-service
-    digest: sha256:ec720f099454949be1168ff882a00ec0e6054eb75a65a867de35a6486ca7c743
+    digest: sha256:71d20583ecf79379d534ea9c05b5957a94608fb24d8775d50ec2c6edb0cab3ae
   - name: hiunehihi/inventory-service
-    digest: sha256:dd00b89eef50b358faab401c392d5300699db3546ce71230a252e301aedfd445
+    digest: sha256:11973ff4338f89c450d1022f8074aeff655810e8f0263e36e51529ca0c30bfd6
   - name: hiunehihi/notification-service
-    digest: sha256:d30ce985faec07fe2b48d0d1daffbb57c196beceb9a69562d58502270292ddfd
+    digest: sha256:335d80107b6b6401a628de9ff6427a98f5ef2e45c9f5840548c1c48091114b5d
   - name: hiunehihi/admin-server
-    digest: sha256:bc9c3ba605fb53b89631bf5fbe1f22520b1d961df651ee983b99b40319a693c4
+    digest: sha256:feb806a8142f95338dcaedf2c5a35c48564870a9544aedf2bab55ba858a5f2d6
   - name: hiunehihi/frontend
     digest: sha256:e566ad4721d98057bb401a551a7c54bce232687aa63edaf6b3909eaefa23bf51
