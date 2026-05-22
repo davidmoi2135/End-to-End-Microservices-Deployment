@@ -176,7 +176,7 @@ spec:
             - name: EUREKA_INSTANCE_HOSTNAME
               value: order-service
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://postgres-order:5431/order-service
+              value: jdbc:postgresql://postgres-order:5432/order-service
             - name: SPRING_DATASOURCE_USERNAME
               value: ptechie
             - name: SPRING_DATASOURCE_PASSWORD

@@ -43,9 +43,11 @@ spec:
     server: https://kubernetes.default.svc
     namespace: spring-microservices
   syncPolicy:
-    # Auto-sync intentionally disabled for production.
-    # Image Updater will still commit digest bumps to main, but a human
-    # must review the diff in the ArgoCD UI and click Sync.
+    # Auto-sync enabled: once Image Updater commits a digest bump to main,
+    # ArgoCD reconciles and deploys without manual intervention.
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
     retry:

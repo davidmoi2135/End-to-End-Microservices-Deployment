@@ -317,7 +317,7 @@ resource "aws_instance" "master" {
   EOT
 
   root_block_device {
-    volume_size = var.root_volume_size_gb
+    volume_size = var.master_volume_size_gb
     volume_type = "gp3"
   }
 
@@ -336,7 +336,7 @@ resource "aws_instance" "workers" {
   subnet_id                   = local.subnet_ids[count.index % length(local.subnet_ids)]
   vpc_security_group_ids      = [aws_security_group.k8s_sg.id]
   associate_public_ip_address = true
-  depends_on    = [aws_instance.master]
+  depends_on                  = [aws_instance.master]
 
   metadata_options {
     http_endpoint               = "enabled"
@@ -368,7 +368,7 @@ resource "aws_instance" "workers" {
   EOT
 
   root_block_device {
-    volume_size = var.root_volume_size_gb
+    volume_size = var.worker_volume_size_gb
     volume_type = "gp3"
   }
 
