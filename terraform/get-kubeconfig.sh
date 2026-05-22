@@ -4,7 +4,7 @@
 # directly at the master's public IP.
 set -euo pipefail
 
-MASTER_IP="${1:-54.254.224.159}"
+MASTER_IP="${1:-13.212.241.178}"
 KEY="${SSH_KEY:-./k3s-key.pem}"
 
 echo "Fetching kubeconfig from $MASTER_IP ..."

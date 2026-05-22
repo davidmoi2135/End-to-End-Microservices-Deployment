@@ -11,15 +11,15 @@ variable "project" {
 }
 
 variable "master_instance_type" {
-  description = "Master EC2 type (c7i-flex.large = 2 vCPU / 4 GB; NOT free tier)"
+  description = "Master EC2 type (m7i-flex.large = 2 vCPU / 8 GB; free-tier-eligible)"
   type        = string
-  default     = "c7i-flex.large"
+  default     = "m7i-flex.large"
 }
 
 variable "worker_instance_type" {
-  description = "Worker EC2 type (c7i-flex.large = 2 vCPU / 4 GB; NOT free tier)"
+  description = "Worker EC2 type (m7i-flex.large = 2 vCPU / 8 GB; free-tier-eligible)"
   type        = string
-  default     = "c7i-flex.large"
+  default     = "m7i-flex.large"
 }
 
 variable "worker_count" {
@@ -34,10 +34,16 @@ variable "k3s_version" {
   default     = "v1.30.5+k3s1"
 }
 
-variable "root_volume_size_gb" {
-  description = "Root EBS volume per node (GB). Free tier total = 30GB across all instances."
+variable "master_volume_size_gb" {
+  description = "Root EBS volume for master node (GB)."
   type        = number
-  default     = 10
+  default     = 30
+}
+
+variable "worker_volume_size_gb" {
+  description = "Root EBS volume per worker node (GB)."
+  type        = number
+  default     = 15
 }
 
 variable "ssh_public_key" {

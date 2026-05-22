@@ -317,7 +317,7 @@ resource "aws_instance" "master" {
   EOT
 
   root_block_device {
-    volume_size = var.root_volume_size_gb
+    volume_size = var.master_volume_size_gb
     volume_type = "gp3"
   }
 
@@ -368,7 +368,7 @@ resource "aws_instance" "workers" {
   EOT
 
   root_block_device {
-    volume_size = var.root_volume_size_gb
+    volume_size = var.worker_volume_size_gb
     volume_type = "gp3"
   }
 
