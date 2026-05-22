@@ -23,9 +23,9 @@ images:
   - name: hiunehihi/cart-service
     digest: sha256:b4e0b71b62eef480555fd2ca6e3a3a6bb8ee16ad597ab20bdafcefcc0b2c8626
   - name: hiunehihi/payment-service
-    digest: sha256:deba51bd557009750a9b1fc4a943079dd613497bc021af376475c96f5f4c39b6
+    digest: sha256:2d8cc63547da4faa2b4b36643d2650c5323ebfb71f5005b81c07f3a59dedc5b3
   - name: hiunehihi/discovery-server
-    digest: sha256:44afd8158586a942e43344301a8d282a85d2ec0dc6ead1fd2e71f52b7c4fa442
+    digest: sha256:a3511d8b62ac8630f8226af87da1e407f4b1280245d9bf050cab23453c752e30
   - name: hiunehihi/api-gateway
     digest: sha256:3d8afa17d6da0590d50735cc7be02b52936a952da27f7b0358a788e36c86bef7
   - name: hiunehihi/order-service
