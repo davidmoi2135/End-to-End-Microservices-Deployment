@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: cart-service
-          image: hiunehihi/cart-service:dev
+          image: kaing615/cart-service:dev
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
@@ -87,7 +87,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: hiunehihi/payment-service:dev
+          image: kaing615/payment-service:dev
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE

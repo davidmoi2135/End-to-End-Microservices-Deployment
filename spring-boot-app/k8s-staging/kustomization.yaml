@@ -16,23 +16,23 @@ resources:
   - monitoring/prometheus-config.yaml
   - monitoring/grafana.yaml
 images:
-  - name: hiunehihi/product-service
-    digest: sha256:bbda97a731b9cce16cf5972eae9ebf24c584c0f5e957253116dcb1603464e328
-  - name: hiunehihi/cart-service
-    digest: sha256:0a9550503139480cba84961dc55abae7799c648cb9bc6eeb263178637a133fb5
-  - name: hiunehihi/payment-service
-    digest: sha256:c799f45ed82fb6f7eb7a543b7736426e5448f6589e206248be7d79ee82422263
-  - name: hiunehihi/discovery-server
-    digest: sha256:27ea1b985c8a521dc15049b721c6dcf0d5cb15138a87d53eb10fbdff11b5e04f
-  - name: hiunehihi/api-gateway
-    digest: sha256:ceb9fc47f47ab882a79b9c5b62beafc255663cddbe1071f0a660820423632a4d
-  - name: hiunehihi/order-service
-    digest: sha256:fd2e62e68ccd6e88c45ad6468ea09013c021cf2298c8bd850886b6c642459037
-  - name: hiunehihi/inventory-service
-    digest: sha256:6442582a29fe108fef268428dc48a191a21907dce9a5f64340119c54d7d52fc5
-  - name: hiunehihi/notification-service
-    digest: sha256:39090c0b441f216e8143f938107a5359bad9653883ce86058cbede4c41df480f
-  - name: hiunehihi/admin-server
-    digest: sha256:4ab71ef1f7950e4b5d2749fa4ffa961539e7972067d53ea480006068cacdaa27
-  - name: hiunehihi/frontend
-    digest: sha256:b44b62a59e55fada018b3160587b6e3d826f58647bb810da5895a36e2947b64c
+  - name: kaing615/product-service
+    newTag: dev
+  - name: kaing615/cart-service
+    newTag: dev
+  - name: kaing615/payment-service
+    newTag: dev
+  - name: kaing615/discovery-server
+    newTag: dev
+  - name: kaing615/api-gateway
+    newTag: dev
+  - name: kaing615/order-service
+    newTag: dev
+  - name: kaing615/inventory-service
+    newTag: dev
+  - name: kaing615/notification-service
+    newTag: dev
+  - name: kaing615/admin-server
+    newTag: dev
+  - name: kaing615/frontend
+    newTag: dev
