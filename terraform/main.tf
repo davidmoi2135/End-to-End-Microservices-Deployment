@@ -432,12 +432,21 @@ output "cluster_info" {
   description = "k3s cluster node information"
   sensitive   = true
   value = {
-    vpc_id         = data.aws_vpc.default.id
-    security_group = aws_security_group.k8s_sg.id
-    master_ip      = aws_instance.master[0].public_ip
-    master_private = aws_instance.master[0].private_ip
-    worker_ips     = aws_instance.workers[*].public_ip
-    worker_private = aws_instance.workers[*].private_ip
-    k3s_token      = random_password.k3s_token.result
+    vpc_id          = data.aws_vpc.default.id
+    security_group  = aws_security_group.k8s_sg.id
+    master_ip       = aws_instance.master[0].public_ip
+    master_private  = aws_instance.master[0].private_ip
+    worker_ips      = aws_instance.workers[*].public_ip
+    worker_private  = aws_instance.workers[*].private_ip
+    k3s_token       = random_password.k3s_token.result
+  }
+}
+
+output "ssh_commands" {
+  description = "SSH commands to connect to nodes"
+  value = {
+    master  = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.master[0].public_ip}"
+    worker1 = "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.workers[0].public_ip}"
+    worker2 = length(aws_instance.workers) > 1 ? "ssh -i ~/.ssh/labsuser.pem ubuntu@${aws_instance.workers[1].public_ip}" : "no worker-2"
   }
 }
