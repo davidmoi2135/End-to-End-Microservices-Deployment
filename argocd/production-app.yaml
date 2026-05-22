@@ -27,7 +27,7 @@ metadata:
     argocd-image-updater.argoproj.io/admin.update-strategy: digest
     argocd-image-updater.argoproj.io/frontend.update-strategy: digest
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-    argocd-image-updater.argoproj.io/write-back-target: kustomization:spring-boot-app/k8s
+    argocd-image-updater.argoproj.io/write-back-target: kustomization:.
     argocd-image-updater.argoproj.io/git-branch: main
     # === Slack notification subscriptions ===
     notifications.argoproj.io/subscribe.on-sync-failed.slack: deployments
