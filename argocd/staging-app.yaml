@@ -9,16 +9,16 @@ metadata:
     # tag MUST be specified inline in the image-list (allow-tags regexp does
     # not supply a tag for the digest strategy).
     argocd-image-updater.argoproj.io/image-list: >-
-      product=hiunehihi/product-service:dev,
-      cart=hiunehihi/cart-service:dev,
-      payment=hiunehihi/payment-service:dev,
-      discovery=hiunehihi/discovery-server:dev,
-      gateway=hiunehihi/api-gateway:dev,
-      order=hiunehihi/order-service:dev,
-      inventory=hiunehihi/inventory-service:dev,
-      notification=hiunehihi/notification-service:dev,
-      admin=hiunehihi/admin-server:dev,
-      frontend=hiunehihi/frontend:dev
+      product=kaing615/product-service:dev,
+      cart=kaing615/cart-service:dev,
+      payment=kaing615/payment-service:dev,
+      discovery=kaing615/discovery-server:dev,
+      gateway=kaing615/api-gateway:dev,
+      order=kaing615/order-service:dev,
+      inventory=kaing615/inventory-service:dev,
+      notification=kaing615/notification-service:dev,
+      admin=kaing615/admin-server:dev,
+      frontend=kaing615/frontend:dev
     argocd-image-updater.argoproj.io/product.update-strategy: digest
     argocd-image-updater.argoproj.io/cart.update-strategy: digest
     argocd-image-updater.argoproj.io/payment.update-strategy: digest
