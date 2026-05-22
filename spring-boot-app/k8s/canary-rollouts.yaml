@@ -7,6 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   replicas: 2
+  progressDeadlineSeconds: 300
+  progressDeadlineAbort: true
   selector:
     matchLabels:
       app: product-service
