@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: hiunehihi/product-service:dev
+          image: kaingyn615/product-service:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

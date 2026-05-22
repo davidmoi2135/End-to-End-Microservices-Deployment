@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
             <div className="navbar-brand">
                 <Link to="/">
                     <ShoppingBag className="logo-icon" size={28} />
-                    <span className="logo-text">V-Shop</span>
+                    <span className="logo-text">V-Shop CI/CD Demo</span>
                 </Link>
             </div>
 
@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
                 )}
 
                 {isAdmin && (
-                    <li><Link to="/admin" title="Quản trị" className="admin-access"><LayoutDashboard size={20} /></Link></li>
+                    <li><Link to="/admin" title="Quản trị viên (administrator)" className="admin-access"><LayoutDashboard size={20} /></Link></li>
                 )}
 
                 {isAuthenticated ? (

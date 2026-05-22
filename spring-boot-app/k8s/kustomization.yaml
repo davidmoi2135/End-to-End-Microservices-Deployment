@@ -19,23 +19,23 @@ resources:
   - monitoring/grafana.yaml
   - monitoring/alertmanager.yaml
 images:
-  - name: hiunehihi/product-service
-    digest: sha256:218d420be5c622fb06810154dbeb6810ff6d4baa200b7fb08f3386268d3f9131
-  - name: hiunehihi/cart-service
-    digest: sha256:b4e0b71b62eef480555fd2ca6e3a3a6bb8ee16ad597ab20bdafcefcc0b2c8626
-  - name: hiunehihi/payment-service
-    digest: sha256:deba51bd557009750a9b1fc4a943079dd613497bc021af376475c96f5f4c39b6
-  - name: hiunehihi/discovery-server
-    digest: sha256:44afd8158586a942e43344301a8d282a85d2ec0dc6ead1fd2e71f52b7c4fa442
-  - name: hiunehihi/api-gateway
-    digest: sha256:3d8afa17d6da0590d50735cc7be02b52936a952da27f7b0358a788e36c86bef7
-  - name: hiunehihi/order-service
-    digest: sha256:71d20583ecf79379d534ea9c05b5957a94608fb24d8775d50ec2c6edb0cab3ae
-  - name: hiunehihi/inventory-service
-    digest: sha256:11973ff4338f89c450d1022f8074aeff655810e8f0263e36e51529ca0c30bfd6
-  - name: hiunehihi/notification-service
-    digest: sha256:335d80107b6b6401a628de9ff6427a98f5ef2e45c9f5840548c1c48091114b5d
-  - name: hiunehihi/admin-server
-    digest: sha256:feb806a8142f95338dcaedf2c5a35c48564870a9544aedf2bab55ba858a5f2d6
-  - name: hiunehihi/frontend
-    digest: sha256:e566ad4721d98057bb401a551a7c54bce232687aa63edaf6b3909eaefa23bf51
+  - name: kaingyn615/product-service
+    newTag: main
+  - name: kaingyn615/cart-service
+    newTag: main
+  - name: kaingyn615/payment-service
+    newTag: main
+  - name: kaingyn615/discovery-server
+    newTag: main
+  - name: kaingyn615/api-gateway
+    newTag: main
+  - name: kaingyn615/order-service
+    newTag: main
+  - name: kaingyn615/inventory-service
+    newTag: main
+  - name: kaingyn615/notification-service
+    newTag: main
+  - name: kaingyn615/admin-server
+    newTag: main
+  - name: kaingyn615/frontend
+    newTag: main

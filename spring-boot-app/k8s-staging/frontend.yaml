@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: hiunehihi/frontend:dev
+          image: kaingyn615/frontend:dev
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
