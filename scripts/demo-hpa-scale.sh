@@ -36,7 +36,7 @@ cleanup() {
 
   if [ -n "${HPA_BACKUP:-}" ] && [ -f "$HPA_BACKUP" ]; then
     log "Restoring original HPA"
-    kubectl apply -f "$HPA_BACKUP" >/dev/null || true
+    kubectl -n "$NS" patch hpa "$HPA" --type merge -p "{\"spec\":$(cat "$HPA_BACKUP")}" >/dev/null || true
     rm -f "$HPA_BACKUP"
   else
     log "Leaving HPA at min=$MIN_REPLICAS max=$MAX_REPLICAS target=${CPU_TARGET}%"
@@ -61,7 +61,7 @@ kubectl -n "$NS" get svc "$SERVICE"
 
 if kubectl -n "$NS" get hpa "$HPA" >/dev/null 2>&1; then
   HPA_BACKUP="$(mktemp)"
-  kubectl -n "$NS" get hpa "$HPA" -o yaml > "$HPA_BACKUP"
+  kubectl -n "$NS" get hpa "$HPA" -o jsonpath='{.spec}' > "$HPA_BACKUP"
 else
   HPA_BACKUP=""
 fi
