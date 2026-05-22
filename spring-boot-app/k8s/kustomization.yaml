@@ -35,6 +35,6 @@ images:
   - name: hiunehihi/notification-service
     digest: sha256:d30ce985faec07fe2b48d0d1daffbb57c196beceb9a69562d58502270292ddfd
   - name: hiunehihi/admin-server
-    digest: sha256:9cb696ad5342767ff91ae381800f9c70282fac19af9e5cca5de417e00b2716a8
+    digest: sha256:bc9c3ba605fb53b89631bf5fbe1f22520b1d961df651ee983b99b40319a693c4
   - name: hiunehihi/frontend
     digest: sha256:e566ad4721d98057bb401a551a7c54bce232687aa63edaf6b3909eaefa23bf51
