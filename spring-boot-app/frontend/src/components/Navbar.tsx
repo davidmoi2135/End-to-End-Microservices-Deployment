@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
             <div className="navbar-brand">
                 <Link to="/">
                     <ShoppingBag className="logo-icon" size={28} />
-                    <span className="logo-text">V-Shop</span>
+                    <span className="logo-text">V-Shop CI/CD Demo</span>
                 </Link>
             </div>
 
