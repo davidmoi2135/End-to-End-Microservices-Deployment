@@ -6,16 +6,16 @@ metadata:
   annotations:
     # === ArgoCD Image Updater ===
     argocd-image-updater.argoproj.io/image-list: >-
-      product=kaing615/product-service:main,
-      cart=kaing615/cart-service:main,
-      payment=kaing615/payment-service:main,
-      discovery=kaing615/discovery-server:main,
-      gateway=kaing615/api-gateway:main,
-      order=kaing615/order-service:main,
-      inventory=kaing615/inventory-service:main,
-      notification=kaing615/notification-service:main,
-      admin=kaing615/admin-server:main,
-      frontend=kaing615/frontend:main
+      product=kaingyn615/product-service:main,
+      cart=kaingyn615/cart-service:main,
+      payment=kaingyn615/payment-service:main,
+      discovery=kaingyn615/discovery-server:main,
+      gateway=kaingyn615/api-gateway:main,
+      order=kaingyn615/order-service:main,
+      inventory=kaingyn615/inventory-service:main,
+      notification=kaingyn615/notification-service:main,
+      admin=kaingyn615/admin-server:main,
+      frontend=kaingyn615/frontend:main
     argocd-image-updater.argoproj.io/product.update-strategy: digest
     argocd-image-updater.argoproj.io/cart.update-strategy: digest
     argocd-image-updater.argoproj.io/payment.update-strategy: digest

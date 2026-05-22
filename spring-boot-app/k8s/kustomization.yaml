@@ -18,23 +18,23 @@ resources:
   - monitoring/grafana.yaml
   - monitoring/alertmanager.yaml
 images:
-  - name: kaing615/product-service
+  - name: kaingyn615/product-service
     newTag: main
-  - name: kaing615/cart-service
+  - name: kaingyn615/cart-service
     newTag: main
-  - name: kaing615/payment-service
+  - name: kaingyn615/payment-service
     newTag: main
-  - name: kaing615/discovery-server
+  - name: kaingyn615/discovery-server
     newTag: main
-  - name: kaing615/api-gateway
+  - name: kaingyn615/api-gateway
     newTag: main
-  - name: kaing615/order-service
+  - name: kaingyn615/order-service
     newTag: main
-  - name: kaing615/inventory-service
+  - name: kaingyn615/inventory-service
     newTag: main
-  - name: kaing615/notification-service
+  - name: kaingyn615/notification-service
     newTag: main
-  - name: kaing615/admin-server
+  - name: kaingyn615/admin-server
     newTag: main
-  - name: kaing615/frontend
+  - name: kaingyn615/frontend
     newTag: main
