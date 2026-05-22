@@ -4,7 +4,9 @@ metadata:
   name: product-service
   namespace: spring-microservices-staging
 spec:
-  replicas: 2
+  replicas: 1
+  progressDeadlineSeconds: 300
+  progressDeadlineAbort: true
   selector:
     matchLabels:
       app: product-service
@@ -44,16 +46,12 @@ spec:
             failureThreshold: 5
           resources:
             requests:
-              cpu: 150m
-              memory: 384Mi
+              cpu: 100m
+              memory: 128Mi
             limits:
-              cpu: 750m
-              memory: 768Mi
+              cpu: 500m
+              memory: 512Mi
   strategy:
     canary:
       steps:
-        - setWeight: 20
-        - pause: { duration: 5m }
-        - setWeight: 50
-        - pause: { duration: 2m }
         - setWeight: 100
