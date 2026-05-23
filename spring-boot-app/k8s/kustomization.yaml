@@ -18,6 +18,7 @@ resources:
   - monitoring/prometheus-deployment.yaml
   - monitoring/grafana.yaml
   - monitoring/alertmanager.yaml
+  - monitoring/alertmanager-slack-secret.yaml
 images:
   - name: kaingyn615/product-service
     newTag: main
