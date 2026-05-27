@@ -2,6 +2,11 @@ name: Frontend CI
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [ "dev" ]
+    paths:
+      - 'spring-boot-app/frontend/**'
+      - '.github/workflows/frontend-ci.yaml'
   push:
     branches: [ "main", "dev" ]
     paths:
@@ -40,7 +45,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Unit test
+        run: npm test -- --watchAll=false --coverage
 
       - name: Build React app
         run: npm run build
@@ -52,14 +60,14 @@ jobs:
           projectBaseDir: spring-boot-app/frontend
 
       - name: Login Docker Hub
-        if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
+        if: github.event_name != 'pull_request' && env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
         uses: docker/login-action@v2
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
+        if: github.event_name != 'pull_request' && env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
         env:
           # URL gốc để frontend gọi API. Mặc định là DNS name của ALB (Cách 4 - truy cập qua ALB).
           # Có thể override bằng GitHub Actions variable REACT_APP_API_BASE_URL.
@@ -67,7 +75,7 @@ jobs:
         run: docker build --build-arg REACT_APP_API_BASE_URL="$REACT_APP_API_BASE_URL" -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }} -t ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }}-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
-        if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
+        if: github.event_name != 'pull_request' && env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: '${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }}-${{ github.sha }}'
@@ -78,13 +86,13 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Push Docker image
-        if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
+        if: github.event_name != 'pull_request' && env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
         run: |
           docker push ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }}
           docker push ${{ env.DOCKER_USERNAME }}/frontend:${{ github.ref_name }}-${{ github.sha }}
 
       - name: Slack Notification - Success
-        if: success() && env.SLACK_WEBHOOK != ''
+        if: success() && github.event_name != 'pull_request' && env.SLACK_WEBHOOK != ''
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}

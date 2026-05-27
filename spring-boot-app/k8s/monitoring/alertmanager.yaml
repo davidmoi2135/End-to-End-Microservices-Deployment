@@ -12,7 +12,7 @@ data:
       smtp_smarthost: 'smtp.example.com:587'
       smtp_from: 'alertmanager@ecommerce-demo.com'
       smtp_auth_username: 'alertmanager'
-      smtp_auth_password: 'changeme'
+      smtp_auth_password: 'alertmanager-password'
     
     templates:
       - '/etc/alertmanager/*.tmpl'
@@ -42,15 +42,28 @@ data:
         webhook_configs:
           - url: 'http://notification-service.spring-microservices:8080/api/alerts'
             send_resolved: true
-        # Slack notification (optional)
-        # slack_configs:
-        #   - api_url: 'https://hooks.slack.com/services/xxx'
-        #     channel: '#alerts-critical'
-        #     send_resolved: true
+        slack_configs:
+          - api_url: '$SLACK_WEBHOOK_URL'
+            channel: '#alerts-critical'
+            send_resolved: true
+            text: |
+              :rotating_light: *Critical Alert*
+              *Alert:* {{ .GroupLabels.alertname }}
+              *Status:* {{ .Status }}
+              {{ range .Alerts }}> *{{ .Labels.instance }}*: {{ .Annotations.summary }}{{ end }}
       - name: 'warning-alerts'
         webhook_configs:
           - url: 'http://notification-service.spring-microservices:8080/api/alerts'
             send_resolved: true
+        slack_configs:
+          - api_url: '$SLACK_WEBHOOK_URL'
+            channel: '#alerts-warning'
+            send_resolved: true
+            text: |
+              :warning: *Warning Alert*
+              *Alert:* {{ .GroupLabels.alertname }}
+              *Status:* {{ .Status }}
+              {{ range .Alerts }}> *{{ .Labels.instance }}*: {{ .Annotations.summary }}{{ end }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -108,6 +121,13 @@ spec:
             name: alertmanager-config
         - name: storage
           emptyDir: {}
+      env:
+        - name: SLACK_WEBHOOK_URL
+          valueFrom:
+            secretKeyRef:
+              name: alertmanager-slack-secret
+              key: slack-webhook-url
+              optional: true
 ---
 apiVersion: v1
 kind: Service
